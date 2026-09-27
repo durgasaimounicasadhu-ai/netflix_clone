@@ -3,35 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Netflix Clone</title>
+  <title>Netflix Clone Demo | Frontend Project</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 </head>
 <body>
 
-  <!-- DEMO LOGIN -->
+  <!-- DEMO ENTRY -->
   <div id="loginScreen" class="screen active">
     <div class="login-bg"></div>
     <nav class="login-nav">
-      <span class="brand-logo" aria-label="Netflix Clone demo"><span class="logo-netflix">NETFLIX</span><span class="logo-clone">CLONE</span></span>
+      <span class="brand-logo" aria-label="Netflix Clone Demo"><span class="logo-netflix">NETFLIX</span><span class="logo-clone">CLONE DEMO</span></span>
     </nav>
     <div class="login-card demo-card">
-      <div class="demo-badge">PORTFOLIO DEMO</div>
+      <div class="demo-badge">FRONTEND DEMO PROJECT</div>
       <h1>Netflix Clone</h1>
-      <p class="login-sub">A frontend streaming UI built with HTML, CSS &amp; JavaScript.</p>
+      <p class="login-sub">A portfolio project built with HTML, CSS &amp; JavaScript.</p>
       <div class="demo-notice">
-        <i class="fas fa-shield-halved"></i>
-        <span>No real account, phone number, password or OTP is required.</span>
+        <strong>Demo only</strong>
+        <span>No real account, phone number, password, OTP, or personal information is required.</span>
       </div>
-      <button class="btn-netflix" id="enterDemoBtn" type="button">Enter Demo <i class="fas fa-arrow-right"></i></button>
-      <p class="login-hint">Educational portfolio project · Not affiliated with Netflix</p>
+      <button class="btn-netflix" id="enterDemoBtn" type="button">Enter Demo</button>
+      <p class="login-hint">Educational UI project — not affiliated with Netflix.</p>
     </div>
   </div>
 
   <!-- PROFILES -->
   <div id="profileScreen" class="screen">
     <nav class="login-nav">
-      <span class="brand-logo" aria-label="Netflix Clone"><span class="logo-netflix">NETFLIX</span><span class="logo-clone">CLONE</span></span>
+      <span class="brand-logo" aria-label="Netflix Clone Demo"><span class="logo-netflix">NETFLIX</span><span class="logo-clone">CLONE</span></span>
     </nav>
     <div class="profiles-wrap">
       <h1 class="profiles-title">Who's watching?</h1>
@@ -44,9 +44,9 @@
   <div id="addProfileModal" class="profile-modal hidden">
     <div class="profile-modal-card">
       <h2>Add Profile</h2>
-      <p class="profile-modal-sub">Add a profile for another person watching Netflix Clone.</p>
+      <p class="profile-modal-sub">Add a profile for another person watching this demo.</p>
       <div class="add-profile-row">
-        <img id="newProfileAvatar" src="https://i.pravatar.cc/150?img=11" alt="" class="add-avatar" />
+        <img id="newProfileAvatar" src="" alt="" class="add-avatar" />
         <input type="text" id="newProfileName" placeholder="Name" maxlength="20" />
       </div>
       <div class="kids-toggle-row">
@@ -68,7 +68,7 @@
   <div id="mainApp" class="screen">
     <nav class="navbar" id="navbar">
       <div class="nav-left">
-        <a href="#" class="logo"><span class="brand-logo brand-logo-sm" aria-label="Netflix Clone"><span class="logo-netflix">NETFLIX</span><span class="logo-clone">CLONE</span></span></a>
+        <a href="#" class="logo"><span class="brand-logo brand-logo-sm" aria-label="Netflix Clone Demo"><span class="logo-netflix">NETFLIX</span><span class="logo-clone">CLONE</span></span></a>
         <ul class="nav-links">
           <li><a href="#" class="active">Home</a></li>
           <li><a href="#trending">TV Shows</a></li>
@@ -85,7 +85,7 @@
         <a href="#" class="nav-icon" aria-label="Notifications"><i class="fas fa-bell"></i></a>
         <div class="profile-dropdown" id="profileDropdown">
           <div class="profile-trigger" id="profileTrigger">
-            <img id="currentAvatar" src="https://i.pravatar.cc/150?img=11" alt="Profile" class="avatar" />
+            <img id="currentAvatar" src="" alt="Profile" class="avatar" />
             <i class="fas fa-caret-down"></i>
           </div>
           <div class="dropdown-menu" id="dropdownMenu">
@@ -140,7 +140,7 @@
         <a href="#">Cookie Preferences</a>
         <a href="#">Contact Us</a>
       </div>
-      <p class="footer-copy">© 2026 Netflix Clone — Portfolio Demo<br>Built with HTML, CSS &amp; JavaScript</p>
+      <p class="footer-copy">© 2026 Netflix Clone Demo — Built with HTML, CSS &amp; JavaScript<br>Developed by ________</p>
     </footer>
   </div>
 

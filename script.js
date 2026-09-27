@@ -1,14 +1,18 @@
 /* Netflix Clone — full app */
 
+function makeAvatar(initials, bg) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><rect width="160" height="160" rx="12" fill="${bg}"/><circle cx="80" cy="62" r="30" fill="#f0c7a4"/><path d="M36 145c5-31 25-48 44-48s39 17 44 48" fill="#202020"/><text x="80" y="154" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#fff">${initials}</text></svg>`;
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
 const PROFILE_AVATARS = [
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=You&backgroundColor=b6e3f4",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Alex&backgroundColor=c0aede",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Sam&backgroundColor=d1d4f9",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Jordan&backgroundColor=ffd5dc",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Casey&backgroundColor=ffdfbf",
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=Riley&backgroundColor=c0aede",
+  makeAvatar("YOU", "#5b8def"),
+  makeAvatar("A", "#8f6ad9"),
+  makeAvatar("S", "#5aa6a6"),
+  makeAvatar("J", "#d16a86"),
+  makeAvatar("C", "#c68a4a"),
+  makeAvatar("R", "#7b76c7"),
 ];
-const KIDS_AVATAR = "https://api.dicebear.com/7.x/bottts/svg?seed=Kids&backgroundColor=b6e3f4";
+const KIDS_AVATAR = makeAvatar("KIDS", "#58a6d8");
 
 let profiles = [
   { id: 1, name: "You", avatar: PROFILE_AVATARS[0], isKids: false },
@@ -17,26 +21,21 @@ let profiles = [
 let currentProfile = null;
 let currentMovie = null;
 
-/** Local, title-matched poster artwork. No random image service is used. */
-const POSTER_FILES = {
-  "Stranger Things":"stranger-things", "The Witcher":"the-witcher", "Wednesday":"wednesday",
-  "Squid Game":"squid-game", "Money Heist":"money-heist", "Arcane":"arcane",
-  "Breaking Bad":"breaking-bad", "The Mandalorian":"the-mandalorian", "Ozark":"ozark",
-  "The Umbrella Academy":"umbrella-academy", "Sex Education":"sex-education", "The Office":"the-office",
-  "Extraction":"extraction", "Red Notice":"red-notice", "Army of the Dead":"army-of-the-dead",
-  "Brooklyn Nine-Nine":"brooklyn-nine-nine", "Bird Box":"bird-box", "The Platform":"the-platform",
-  "My Octopus Teacher":"my-octopus-teacher"
-};
+/** Movie artwork uses the corresponding YouTube trailer thumbnail, so posters match the titles without an API key. */
 function media(title, id) {
-  const slug = POSTER_FILES[title] || title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
   return {
-    image: "posters/" + slug + ".svg",
-    banner: "posters/" + slug + ".svg",
+    image: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+    banner: `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
+    trailer: `https://www.youtube.com/embed/${id}?rel=0&modestbranding=1`,
+  };
+}
+function yt(id) {
+  return {
+    image: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+    banner: `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
     trailer: id,
   };
 }
-function yt(id) { return { image: "", banner: "", trailer: id }; }
-
 
 const movies = {
   trending: [
@@ -44,37 +43,37 @@ const movies = {
       id: 1, title: "Stranger Things", year: 2022, rating: "TV-14", match: "98%", duration: "4 Seasons",
       description: "When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces and one strange little girl.",
       cast: "Millie Bobby Brown, Finn Wolfhard, Winona Ryder", genres: "Sci-Fi, Horror, Drama", tags: "Suspenseful, Scary, Nostalgic",
-      ...media("Stranger Things", "b9EkMc79ZSU"),
+      ...yt("b9EkMc79ZSU"),
     },
     {
       id: 2, title: "The Witcher", year: 2023, rating: "TV-MA", match: "94%", duration: "3 Seasons",
       description: "Geralt of Rivia, a solitary monster hunter, struggles to find his place in a world where people often prove more wicked than beasts.",
       cast: "Henry Cavill, Anya Chalotra, Freya Allan", genres: "Fantasy, Action, Adventure", tags: "Epic, Violent, Exciting",
-      ...media("The Witcher", "ndl1W4ltcmg"),
+      ...yt("ndl1W4ltcmg"),
     },
     {
       id: 3, title: "Wednesday", year: 2022, rating: "TV-14", match: "96%", duration: "1 Season",
       description: "Smart, sarcastic and a bit dead inside, Wednesday Addams investigates a murder spree while making new friends at Nevermore Academy.",
       cast: "Jenna Ortega, Gwendoline Christie, Emma Myers", genres: "Comedy, Horror, Mystery", tags: "Dark, Quirky, Stylish",
-      ...media("Wednesday", "Di310WS8zLk"),
+      ...yt("Di310WS8zLk"),
     },
     {
       id: 4, title: "Squid Game", year: 2021, rating: "TV-MA", match: "95%", duration: "2 Seasons",
       description: "Hundreds of cash-strapped contestants accept an invitation to compete in children's games for a tempting prize, but the stakes are deadly.",
       cast: "Lee Jung-jae, Park Hae-soo, Wi Ha-jun", genres: "Thriller, Drama, Action", tags: "Intense, Suspenseful, Brutal",
-      ...media("Squid Game", "oqxAJKy0ii4"),
+      ...yt("oqxAJKy0ii4"),
     },
     {
       id: 5, title: "Money Heist", year: 2021, rating: "TV-MA", match: "93%", duration: "5 Seasons",
       description: "Eight thieves take hostages and lock themselves in the Royal Mint of Spain as a criminal mastermind manipulates the police.",
       cast: "Úrsula Corberó, Álvaro Morte, Itziar Ituño", genres: "Crime, Drama, Thriller", tags: "Clever, Suspenseful, Exciting",
-      ...media("Money Heist", "_InqQJRqGW4"),
+      ...yt("_InqQJRqGW4"),
     },
     {
       id: 6, title: "Arcane", year: 2021, rating: "TV-14", match: "97%", duration: "2 Seasons",
       description: "Amid the stark discord of two cities, two sisters fight on rival sides of a war between magic technologies and clashing convictions.",
       cast: "Hailee Steinfeld, Ella Purnell, Kevin Alejandro", genres: "Animation, Action, Adventure", tags: "Stunning, Emotional, Epic",
-      ...media("Arcane", "fXmAurh012s"),
+      ...yt("fXmAurh012s"),
     },
   ],
   popular: [
@@ -82,37 +81,37 @@ const movies = {
       id: 7, title: "Breaking Bad", year: 2013, rating: "TV-MA", match: "99%", duration: "5 Seasons",
       description: "A high school chemistry teacher turned methamphetamine manufacturer partners with a former student to secure his family's future.",
       cast: "Bryan Cranston, Aaron Paul, Anna Gunn", genres: "Crime, Drama, Thriller", tags: "Intense, Gripping, Iconic",
-      ...media("Breaking Bad", "HhesaQXLuRY"),
+      ...yt("HhesaQXLuRY"),
     },
     {
       id: 8, title: "The Mandalorian", year: 2023, rating: "TV-14", match: "92%", duration: "3 Seasons",
       description: "The travels of a lone bounty hunter in the outer reaches of the galaxy, far from the authority of the New Republic.",
       cast: "Pedro Pascal, Gina Carano, Carl Weathers", genres: "Sci-Fi, Action, Adventure", tags: "Epic, Exciting, Fun",
-      ...media("The Mandalorian", "aOC8E8z_ifw"),
+      ...yt("aOC8E8z_ifw"),
     },
     {
       id: 9, title: "Ozark", year: 2022, rating: "TV-MA", match: "94%", duration: "4 Seasons",
       description: "A financial adviser drags his family from Chicago to the Missouri Ozarks, where he must launder money to appease a drug cartel.",
       cast: "Jason Bateman, Laura Linney, Sofia Hublitz", genres: "Crime, Drama, Thriller", tags: "Tense, Dark, Gripping",
-      ...media("Ozark", "5hAXVqrljbs"),
+      ...yt("5hAXVqrljbs"),
     },
     {
       id: 10, title: "The Umbrella Academy", year: 2022, rating: "TV-14", match: "89%", duration: "4 Seasons",
       description: "A dysfunctional family of adopted sibling superheroes reunites to solve the mystery of their father's death and prevent an apocalypse.",
       cast: "Elliot Page, Tom Hopper, David Castañeda", genres: "Action, Adventure, Comedy", tags: "Quirky, Action-packed, Fun",
-      ...media("The Umbrella Academy", "0DAmWHxeoKw"),
+      ...yt("0DAmWHxeoKw"),
     },
     {
       id: 11, title: "Sex Education", year: 2023, rating: "TV-MA", match: "92%", duration: "4 Seasons",
       description: "A teenage boy with a sex therapist mother teams up with a classmate to set up an underground sex therapy clinic at school.",
       cast: "Asa Butterfield, Gillian Anderson, Ncuti Gatwa", genres: "Comedy, Drama", tags: "Honest, Heartfelt, Funny",
-      ...media("Sex Education", "Hd2ldTR-WpI"),
+      ...yt("Hd2ldTR-WpI"),
     },
     {
       id: 12, title: "The Office", year: 2013, rating: "TV-14", match: "98%", duration: "9 Seasons",
       description: "A mockumentary on a group of typical office workers, where the workday consists of ego clashes, inappropriate behavior, and tedium.",
       cast: "Steve Carell, Rainn Wilson, John Krasinski", genres: "Comedy", tags: "Iconic, Hilarious, Relatable",
-      ...media("The Office", "LHOtME2DL4g"),
+      ...yt("LHOtME2DL4g"),
     },
   ],
   top10: [
@@ -120,61 +119,61 @@ const movies = {
       id: 13, title: "Stranger Things", year: 2022, rating: "TV-14", match: "98%", duration: "4 Seasons",
       description: "When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces and one strange little girl.",
       cast: "Millie Bobby Brown, Finn Wolfhard, Winona Ryder", genres: "Sci-Fi, Horror, Drama", tags: "Suspenseful, Scary, Nostalgic",
-      ...media("Stranger Things", "b9EkMc79ZSU"),
+      ...yt("b9EkMc79ZSU"),
     },
     {
       id: 14, title: "Wednesday", year: 2022, rating: "TV-14", match: "96%", duration: "1 Season",
       description: "Smart, sarcastic and a bit dead inside, Wednesday Addams investigates a murder spree while making new friends at Nevermore Academy.",
       cast: "Jenna Ortega, Gwendoline Christie, Emma Myers", genres: "Comedy, Horror, Mystery", tags: "Dark, Quirky, Stylish",
-      ...media("Wednesday", "Di310WS8zLk"),
+      ...yt("Di310WS8zLk"),
     },
     {
       id: 15, title: "Squid Game", year: 2021, rating: "TV-MA", match: "95%", duration: "2 Seasons",
       description: "Hundreds of cash-strapped contestants accept an invitation to compete in children's games for a tempting prize, but the stakes are deadly.",
       cast: "Lee Jung-jae, Park Hae-soo, Wi Ha-jun", genres: "Thriller, Drama, Action", tags: "Intense, Suspenseful, Brutal",
-      ...media("Squid Game", "oqxAJKy0ii4"),
+      ...yt("oqxAJKy0ii4"),
     },
     {
       id: 16, title: "Breaking Bad", year: 2013, rating: "TV-MA", match: "99%", duration: "5 Seasons",
       description: "A high school chemistry teacher turned methamphetamine manufacturer partners with a former student to secure his family's future.",
       cast: "Bryan Cranston, Aaron Paul, Anna Gunn", genres: "Crime, Drama, Thriller", tags: "Intense, Gripping, Iconic",
-      ...media("Breaking Bad", "HhesaQXLuRY"),
+      ...yt("HhesaQXLuRY"),
     },
     {
       id: 17, title: "Arcane", year: 2021, rating: "TV-14", match: "97%", duration: "2 Seasons",
       description: "Amid the stark discord of two cities, two sisters fight on rival sides of a war between magic technologies and clashing convictions.",
       cast: "Hailee Steinfeld, Ella Purnell, Kevin Alejandro", genres: "Animation, Action, Adventure", tags: "Stunning, Emotional, Epic",
-      ...media("Arcane", "fXmAurh012s"),
+      ...yt("fXmAurh012s"),
     },
     {
       id: 18, title: "The Witcher", year: 2023, rating: "TV-MA", match: "94%", duration: "3 Seasons",
       description: "Geralt of Rivia, a solitary monster hunter, struggles to find his place in a world where people often prove more wicked than beasts.",
       cast: "Henry Cavill, Anya Chalotra, Freya Allan", genres: "Fantasy, Action, Adventure", tags: "Epic, Violent, Exciting",
-      ...media("The Witcher", "ndl1W4ltcmg"),
+      ...yt("ndl1W4ltcmg"),
     },
     {
       id: 19, title: "Money Heist", year: 2021, rating: "TV-MA", match: "93%", duration: "5 Seasons",
       description: "Eight thieves take hostages and lock themselves in the Royal Mint of Spain as a criminal mastermind manipulates the police.",
       cast: "Úrsula Corberó, Álvaro Morte, Itziar Ituño", genres: "Crime, Drama, Thriller", tags: "Clever, Suspenseful, Exciting",
-      ...media("Money Heist", "_InqQJRqGW4"),
+      ...yt("_InqQJRqGW4"),
     },
     {
       id: 20, title: "The Mandalorian", year: 2023, rating: "TV-14", match: "92%", duration: "3 Seasons",
       description: "The travels of a lone bounty hunter in the outer reaches of the galaxy, far from the authority of the New Republic.",
       cast: "Pedro Pascal, Gina Carano, Carl Weathers", genres: "Sci-Fi, Action, Adventure", tags: "Epic, Exciting, Fun",
-      ...media("The Mandalorian", "aOC8E8z_ifw"),
+      ...yt("aOC8E8z_ifw"),
     },
     {
       id: 21, title: "Ozark", year: 2022, rating: "TV-MA", match: "94%", duration: "4 Seasons",
       description: "A financial adviser drags his family from Chicago to the Missouri Ozarks, where he must launder money to appease a drug cartel.",
       cast: "Jason Bateman, Laura Linney, Sofia Hublitz", genres: "Crime, Drama, Thriller", tags: "Tense, Dark, Gripping",
-      ...media("Ozark", "5hAXVqrljbs"),
+      ...yt("5hAXVqrljbs"),
     },
     {
       id: 22, title: "Sex Education", year: 2023, rating: "TV-MA", match: "92%", duration: "4 Seasons",
       description: "A teenage boy with a sex therapist mother teams up with a classmate to set up an underground sex therapy clinic at school.",
       cast: "Asa Butterfield, Gillian Anderson, Ncuti Gatwa", genres: "Comedy, Drama", tags: "Honest, Heartfelt, Funny",
-      ...media("Sex Education", "Hd2ldTR-WpI"),
+      ...yt("Hd2ldTR-WpI"),
     },
   ],
   action: [
@@ -182,37 +181,37 @@ const movies = {
       id: 23, title: "Extraction", year: 2020, rating: "R", match: "90%", duration: "1h 56m",
       description: "A black-market mercenary who has nothing to lose is hired to rescue the kidnapped son of an imprisoned international crime lord.",
       cast: "Chris Hemsworth, Rudhraksh Jaiswal, Randeep Hooda", genres: "Action, Thriller", tags: "Intense, Violent, Gripping",
-      ...media("Extraction", "L6P3nI6VnlY"),
+      ...yt("L6P3nI6VnlY"),
     },
     {
       id: 24, title: "Red Notice", year: 2021, rating: "PG-13", match: "85%", duration: "1h 58m",
       description: "An Interpol agent tracks the world's most wanted art thief in this action-comedy heist film.",
       cast: "Dwayne Johnson, Ryan Reynolds, Gal Gadot", genres: "Action, Comedy, Crime", tags: "Fun, Entertaining, Light",
-      ...media("Red Notice", "Pj0wz7zu3Ms"),
+      ...yt("Pj0wz7zu3Ms"),
     },
     {
       id: 25, title: "Army of the Dead", year: 2021, rating: "R", match: "80%", duration: "2h 28m",
       description: "Following a zombie outbreak in Las Vegas, a group of mercenaries takes the ultimate gamble inside the quarantine zone.",
       cast: "Dave Bautista, Ella Purnell, Omari Hardwick", genres: "Action, Horror", tags: "Gory, Fun, Explosive",
-      ...media("Army of the Dead", "tI1JGPhYBS8"),
+      ...yt("tI1JGPhYBS8"),
     },
     {
       id: 26, title: "The Witcher", year: 2023, rating: "TV-MA", match: "94%", duration: "3 Seasons",
       description: "Geralt of Rivia, a solitary monster hunter, struggles to find his place in a world where people often prove more wicked than beasts.",
       cast: "Henry Cavill, Anya Chalotra, Freya Allan", genres: "Fantasy, Action, Adventure", tags: "Epic, Violent, Exciting",
-      ...media("The Witcher", "ndl1W4ltcmg"),
+      ...yt("ndl1W4ltcmg"),
     },
     {
       id: 27, title: "The Mandalorian", year: 2023, rating: "TV-14", match: "92%", duration: "3 Seasons",
       description: "The travels of a lone bounty hunter in the outer reaches of the galaxy, far from the authority of the New Republic.",
       cast: "Pedro Pascal, Gina Carano, Carl Weathers", genres: "Sci-Fi, Action, Adventure", tags: "Epic, Exciting, Fun",
-      ...media("The Mandalorian", "aOC8E8z_ifw"),
+      ...yt("aOC8E8z_ifw"),
     },
     {
       id: 28, title: "Extraction", year: 2020, rating: "R", match: "90%", duration: "1h 56m",
       description: "A black-market mercenary who has nothing to lose is hired to rescue the kidnapped son of an imprisoned international crime lord.",
       cast: "Chris Hemsworth, Rudhraksh Jaiswal, Randeep Hooda", genres: "Action, Thriller", tags: "Intense, Violent, Gripping",
-      ...media("Extraction", "L6P3nI6VnlY"),
+      ...yt("L6P3nI6VnlY"),
     },
   ],
   comedy: [
@@ -220,37 +219,37 @@ const movies = {
       id: 29, title: "The Office", year: 2013, rating: "TV-14", match: "98%", duration: "9 Seasons",
       description: "A mockumentary on a group of typical office workers, where the workday consists of ego clashes, inappropriate behavior, and tedium.",
       cast: "Steve Carell, Rainn Wilson, John Krasinski", genres: "Comedy", tags: "Iconic, Hilarious, Relatable",
-      ...media("The Office", "LHOtME2DL4g"),
+      ...yt("LHOtME2DL4g"),
     },
     {
       id: 30, title: "Brooklyn Nine-Nine", year: 2021, rating: "TV-14", match: "94%", duration: "8 Seasons",
       description: "Comedy series following the exploits of Det. Jake Peralta and his diverse, lovable colleagues of the 99th Precinct.",
       cast: "Andy Samberg, Stephanie Beatriz, Terry Crews", genres: "Comedy, Crime", tags: "Funny, Heartwarming, Quirky",
-      ...media("Brooklyn Nine-Nine", "sEOuJ4z5aTc"),
+      ...yt("sEOuJ4z5aTc"),
     },
     {
       id: 31, title: "Wednesday", year: 2022, rating: "TV-14", match: "96%", duration: "1 Season",
       description: "Smart, sarcastic and a bit dead inside, Wednesday Addams investigates a murder spree while making new friends at Nevermore Academy.",
       cast: "Jenna Ortega, Gwendoline Christie, Emma Myers", genres: "Comedy, Horror, Mystery", tags: "Dark, Quirky, Stylish",
-      ...media("Wednesday", "Di310WS8zLk"),
+      ...yt("Di310WS8zLk"),
     },
     {
       id: 32, title: "Sex Education", year: 2023, rating: "TV-MA", match: "92%", duration: "4 Seasons",
       description: "A teenage boy with a sex therapist mother teams up with a classmate to set up an underground sex therapy clinic at school.",
       cast: "Asa Butterfield, Gillian Anderson, Ncuti Gatwa", genres: "Comedy, Drama", tags: "Honest, Heartfelt, Funny",
-      ...media("Sex Education", "Hd2ldTR-WpI"),
+      ...yt("Hd2ldTR-WpI"),
     },
     {
       id: 33, title: "The Umbrella Academy", year: 2022, rating: "TV-14", match: "89%", duration: "4 Seasons",
       description: "A dysfunctional family of adopted sibling superheroes reunites to solve the mystery of their father's death and prevent an apocalypse.",
       cast: "Elliot Page, Tom Hopper, David Castañeda", genres: "Action, Adventure, Comedy", tags: "Quirky, Action-packed, Fun",
-      ...media("The Umbrella Academy", "0DAmWHxeoKw"),
+      ...yt("0DAmWHxeoKw"),
     },
     {
       id: 34, title: "Brooklyn Nine-Nine", year: 2021, rating: "TV-14", match: "94%", duration: "8 Seasons",
       description: "Comedy series following the exploits of Det. Jake Peralta and his diverse, lovable colleagues of the 99th Precinct.",
       cast: "Andy Samberg, Stephanie Beatriz, Terry Crews", genres: "Comedy, Crime", tags: "Funny, Heartwarming, Quirky",
-      ...media("Brooklyn Nine-Nine", "sEOuJ4z5aTc"),
+      ...yt("sEOuJ4z5aTc"),
     },
   ],
   horror: [
@@ -258,37 +257,37 @@ const movies = {
       id: 35, title: "Bird Box", year: 2018, rating: "R", match: "88%", duration: "2h 4m",
       description: "Five years after an ominous unseen presence drives most of society to suicide, a mother and her two children make a desperate bid for survival.",
       cast: "Sandra Bullock, Trevante Rhodes, John Malkovich", genres: "Horror, Drama, Sci-Fi", tags: "Tense, Emotional, Suspenseful",
-      ...media("Bird Box", "o2AsIXSh2xo"),
+      ...yt("o2AsIXSh2xo"),
     },
     {
       id: 36, title: "The Platform", year: 2019, rating: "TV-MA", match: "86%", duration: "1h 34m",
       description: "A vertical prison with one cell per level. Two people per cell. One food platform and two minutes per day to feed.",
       cast: "Ivan Massagué, Zorion Eguileor, Antonia San Juan", genres: "Horror, Sci-Fi, Thriller", tags: "Brutal, Thought-provoking, Disturbing",
-      ...media("The Platform", "RlfooqeZcdY"),
+      ...yt("RlfooqeZcdY"),
     },
     {
       id: 37, title: "Stranger Things", year: 2022, rating: "TV-14", match: "98%", duration: "4 Seasons",
       description: "When a young boy vanishes, a small town uncovers a mystery involving secret experiments, terrifying supernatural forces and one strange little girl.",
       cast: "Millie Bobby Brown, Finn Wolfhard, Winona Ryder", genres: "Sci-Fi, Horror, Drama", tags: "Suspenseful, Scary, Nostalgic",
-      ...media("Stranger Things", "b9EkMc79ZSU"),
+      ...yt("b9EkMc79ZSU"),
     },
     {
       id: 38, title: "Wednesday", year: 2022, rating: "TV-14", match: "96%", duration: "1 Season",
       description: "Smart, sarcastic and a bit dead inside, Wednesday Addams investigates a murder spree while making new friends at Nevermore Academy.",
       cast: "Jenna Ortega, Gwendoline Christie, Emma Myers", genres: "Comedy, Horror, Mystery", tags: "Dark, Quirky, Stylish",
-      ...media("Wednesday", "Di310WS8zLk"),
+      ...yt("Di310WS8zLk"),
     },
     {
       id: 39, title: "Army of the Dead", year: 2021, rating: "R", match: "80%", duration: "2h 28m",
       description: "Following a zombie outbreak in Las Vegas, a group of mercenaries takes the ultimate gamble inside the quarantine zone.",
       cast: "Dave Bautista, Ella Purnell, Omari Hardwick", genres: "Action, Horror", tags: "Gory, Fun, Explosive",
-      ...media("Army of the Dead", "tI1JGPhYBS8"),
+      ...yt("tI1JGPhYBS8"),
     },
     {
       id: 40, title: "Bird Box", year: 2018, rating: "R", match: "88%", duration: "2h 4m",
       description: "Five years after an ominous unseen presence drives most of society to suicide, a mother and her two children make a desperate bid for survival.",
       cast: "Sandra Bullock, Trevante Rhodes, John Malkovich", genres: "Horror, Drama, Sci-Fi", tags: "Tense, Emotional, Suspenseful",
-      ...media("Bird Box", "o2AsIXSh2xo"),
+      ...yt("o2AsIXSh2xo"),
     },
   ],
   documentaries: [
@@ -296,37 +295,37 @@ const movies = {
       id: 41, title: "My Octopus Teacher", year: 2020, rating: "TV-G", match: "95%", duration: "1h 25m",
       description: "A filmmaker forges an unusual friendship with an octopus living in a South African kelp forest, learning as the animal shares the mysteries of her world.",
       cast: "Craig Foster", genres: "Documentary", tags: "Beautiful, Emotional, Unique",
-      ...media("My Octopus Teacher", "3s0LTDhqe5A"),
+      ...yt("3s0LTDhqe5A"),
     },
     {
       id: 42, title: "The Platform", year: 2019, rating: "TV-MA", match: "86%", duration: "1h 34m",
       description: "A vertical prison with one cell per level. Two people per cell. One food platform and two minutes per day to feed.",
       cast: "Ivan Massagué, Zorion Eguileor, Antonia San Juan", genres: "Horror, Sci-Fi, Thriller", tags: "Brutal, Thought-provoking, Disturbing",
-      ...media("The Platform", "RlfooqeZcdY"),
+      ...yt("RlfooqeZcdY"),
     },
     {
       id: 43, title: "My Octopus Teacher", year: 2020, rating: "TV-G", match: "95%", duration: "1h 25m",
       description: "A filmmaker forges an unusual friendship with an octopus living in a South African kelp forest.",
       cast: "Craig Foster", genres: "Documentary", tags: "Beautiful, Emotional, Unique",
-      ...media("My Octopus Teacher", "3s0LTDhqe5A"),
+      ...yt("3s0LTDhqe5A"),
     },
     {
       id: 44, title: "Arcane", year: 2021, rating: "TV-14", match: "97%", duration: "2 Seasons",
       description: "Amid the stark discord of two cities, two sisters fight on rival sides of a war between magic technologies and clashing convictions.",
       cast: "Hailee Steinfeld, Ella Purnell, Kevin Alejandro", genres: "Animation, Action, Adventure", tags: "Stunning, Emotional, Epic",
-      ...media("Arcane", "fXmAurh012s"),
+      ...yt("fXmAurh012s"),
     },
     {
       id: 45, title: "The Office", year: 2013, rating: "TV-14", match: "98%", duration: "9 Seasons",
       description: "A mockumentary on a group of typical office workers.",
       cast: "Steve Carell, Rainn Wilson, John Krasinski", genres: "Comedy", tags: "Iconic, Hilarious, Relatable",
-      ...media("The Office", "LHOtME2DL4g"),
+      ...yt("LHOtME2DL4g"),
     },
     {
       id: 46, title: "Breaking Bad", year: 2013, rating: "TV-MA", match: "99%", duration: "5 Seasons",
       description: "A high school chemistry teacher turned methamphetamine manufacturer partners with a former student.",
       cast: "Bryan Cranston, Aaron Paul, Anna Gunn", genres: "Crime, Drama, Thriller", tags: "Intense, Gripping, Iconic",
-      ...media("Breaking Bad", "HhesaQXLuRY"),
+      ...yt("HhesaQXLuRY"),
     },
   ],
 };
@@ -345,6 +344,7 @@ const ROW_TITLES = {
 const loginScreen = document.getElementById("loginScreen");
 const profileScreen = document.getElementById("profileScreen");
 const mainApp = document.getElementById("mainApp");
+const enterDemoBtn = document.getElementById("enterDemoBtn");
 const profilesGrid = document.getElementById("profilesGrid");
 const addProfileModal = document.getElementById("addProfileModal");
 const newProfileName = document.getElementById("newProfileName");
@@ -364,8 +364,8 @@ function showScreen(screen) {
   window.scrollTo(0, 0);
 }
 
-document.getElementById("enterDemoBtn").addEventListener("click", () => {
-  localStorage.setItem("netflix_logged_in", "true");
+/* ===== DEMO ENTRY ===== */
+enterDemoBtn.addEventListener("click", () => {
   loadProfilesFromStorage();
   renderProfiles();
   showScreen(profileScreen);
@@ -406,7 +406,6 @@ function selectProfile(profile) {
   document.getElementById("currentAvatar").src = profile.avatar;
   updateDropdownProfiles();
   buildRows();
-  setHeroVisual(movies.trending[0]);
   showScreen(mainApp);
 }
 
@@ -462,7 +461,6 @@ document.getElementById("switchProfile").addEventListener("click", (e) => {
 
 document.getElementById("signOutBtn").addEventListener("click", (e) => {
   e.preventDefault();
-  localStorage.removeItem("netflix_logged_in");
   currentProfile = null;
   showScreen(loginScreen);
 });
@@ -544,7 +542,7 @@ function createPoster(movie, isTop10, rank) {
   if (isTop10) el.setAttribute("data-rank", rank);
   el.innerHTML =
     '<img src="' + movie.image + '" alt="' + movie.title + '" loading="lazy" ' +
-    ' />' +
+    'onerror="this.onerror=null;this.style.display=\'none\';this.parentElement.style.background=\'#202020\'" />' +
     '<div class="poster-title-bar">' +
     "<h3>" + movie.title + "</h3>" +
     '<div class="poster-meta"><span class="match">' + movie.match + "</span><span>" +
@@ -609,16 +607,6 @@ function buildRows() {
   });
 }
 
-function setHeroVisual(movie) {
-  const hero = document.getElementById("hero");
-  if (!hero || !movie) return;
-  hero.style.setProperty("--hero-image", `url("${movie.banner}")`);
-  document.getElementById("heroTitle").textContent = movie.title;
-  document.getElementById("heroDesc").textContent = movie.description;
-  const meta = document.querySelector(".hero-meta");
-  if (meta) meta.innerHTML = `<span class="match">${movie.match} Match</span><span class="year">${movie.year}</span><span class="rating">${movie.rating}</span><span class="seasons">${movie.duration}</span><span class="hd">HD</span>`;
-}
-
 /* Navbar / search / hero */
 window.addEventListener("scroll", () => {
   navbar.classList.toggle("scrolled", window.scrollY > 50);
@@ -638,13 +626,7 @@ searchInput.addEventListener("input", (e) => {
 document.getElementById("playBtn").addEventListener("click", () => playTrailer(movies.trending[0]));
 document.getElementById("infoBtn").addEventListener("click", () => openModal(movies.trending[0]));
 
-/* Init */
+/* Init: always begin with the clearly labeled demo entry screen. */
 (function init() {
-  if (localStorage.getItem("netflix_logged_in")) {
-    loadProfilesFromStorage();
-    renderProfiles();
-    showScreen(profileScreen);
-  } else {
-    showScreen(loginScreen);
-  }
+  showScreen(loginScreen);
 })();

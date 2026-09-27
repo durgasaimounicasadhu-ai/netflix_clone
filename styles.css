@@ -34,22 +34,38 @@ img{max-width:100%;display:block}
 .trailer-fallback a:hover{color:#fff}
 
 
-/* Login / Demo landing */
-#loginScreen{position:relative;min-height:100svh;display:none;align-items:center;justify-content:center;padding:6rem 1rem 2rem;overflow:hidden}
+/* Login */
+#loginScreen{position:relative;min-height:100vh;display:none;align-items:center;justify-content:center}
 #loginScreen.active{display:flex}
-.login-bg{position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,0,0,.96),rgba(20,20,20,.86)),url("posters/stranger-things.svg") center/cover no-repeat;z-index:0}
-.login-bg::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 35%,rgba(229,9,20,.14),transparent 42%)}
-.login-nav{position:absolute;top:0;left:0;right:0;padding:1.5rem 4%;z-index:10}
-.login-card{position:relative;z-index:5;background:rgba(12,12,12,.92);border:1px solid rgba(255,255,255,.08);box-shadow:0 25px 80px rgba(0,0,0,.55);border-radius:12px;padding:2.8rem 3rem;width:100%;max-width:520px;margin:0 auto}
-.login-card h1{font-size:clamp(2rem,5vw,3rem);line-height:1.05;margin-bottom:.7rem}
-.login-sub{color:#c7c7c7;margin-bottom:1.5rem;font-size:1rem}
-.demo-badge{display:inline-flex;align-items:center;border:1px solid rgba(229,9,20,.55);color:#ff7b80;background:rgba(229,9,20,.1);padding:.35rem .65rem;border-radius:999px;font-size:.72rem;font-weight:800;letter-spacing:1.2px;margin-bottom:1.2rem}
-.demo-notice{display:flex;gap:.8rem;align-items:flex-start;background:#1d1d1d;border:1px solid #333;border-radius:8px;padding:1rem;color:#d6d6d6;font-size:.9rem;line-height:1.5;margin:1.2rem 0}
-.demo-notice i{color:#46d369;margin-top:.15rem}
-.btn-netflix{width:100%;display:flex;align-items:center;justify-content:center;gap:.6rem;background:var(--red);color:#fff;font-size:1rem;font-weight:700;padding:.95rem;border-radius:6px;margin-top:1rem;transition:background .2s,transform .2s}
-.btn-netflix:hover{background:#f40612;transform:translateY(-1px)}
-.login-hint{margin-top:1.2rem;font-size:.78rem;color:#8f8f8f;text-align:center;line-height:1.5}
+.login-bg{position:fixed;inset:0;background:linear-gradient(to top,rgba(0,0,0,.9),rgba(0,0,0,.55)),url("https://i.ytimg.com/vi/b9EkMc79ZSU/maxresdefault.jpg") center/cover no-repeat;z-index:0}
+.login-nav{position:fixed;top:0;left:0;right:0;padding:1.5rem 3%;z-index:10}
+.login-card{position:relative;z-index:5;background:rgba(0,0,0,.8);border-radius:4px;padding:3rem 3.5rem;width:100%;max-width:450px;margin:0 1rem}
+.login-card h1{font-size:2rem;margin-bottom:.5rem}
+.login-sub{color:var(--lg);margin-bottom:1.5rem}
+.input-group{display:flex;margin-bottom:.4rem}
+.country-select{background:#333;color:#fff;border:none;border-radius:4px 0 0 4px;padding:.9rem .6rem;min-width:100px;outline:none;cursor:pointer}
+.input-group input[type=tel]{flex:1;background:#333;border:none;border-radius:0 4px 4px 0;padding:.9rem 1rem;color:#fff;font-size:1rem;outline:none}
+.input-group input:focus,.country-select:focus{outline:2px solid #fff;outline-offset:-2px}
+.btn-netflix{width:100%;background:var(--red);color:#fff;font-size:1rem;font-weight:600;padding:.9rem;border-radius:4px;margin-top:1rem;transition:background .2s}
+.btn-netflix:hover{background:#f40612}
+.login-hint{margin-top:1.2rem;font-size:.85rem;color:var(--gray);text-align:center}
+.login-hint a{color:#fff;text-decoration:underline}
+.login-hint strong{color:#46d369}
 .error-msg{color:#e87c03;font-size:.85rem;min-height:1.2em;margin-top:.35rem}
+.back-btn{background:transparent;color:#fff;font-size:1.2rem;margin-bottom:1rem;padding:.25rem}
+.otp-inputs{display:flex;gap:.75rem;justify-content:center;margin:1.5rem 0 .5rem}
+.otp-digit{width:52px;height:56px;background:#333;border:2px solid transparent;border-radius:4px;color:#fff;font-size:1.5rem;font-weight:600;text-align:center;outline:none}
+.otp-digit:focus{border-color:#fff}
+
+
+/* ===== DEMO PROJECT NOTICE ===== */
+.demo-card h1{text-align:center;margin:.9rem 0 .45rem;font-size:2rem}
+.demo-badge{display:inline-block;margin:0 auto;padding:.4rem .7rem;border:1px solid #666;border-radius:999px;color:#d7d7d7;font-size:.7rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase}
+.demo-card{text-align:center}
+.demo-card .demo-badge{display:block;width:max-content}
+.demo-notice{display:flex;flex-direction:column;gap:.35rem;margin:1.35rem 0;padding:1rem;border:1px solid #3d3d3d;border-radius:6px;background:#191919;color:#cfcfcf;line-height:1.45;font-size:.88rem}
+.demo-notice strong{color:#fff;font-size:.95rem}
+.demo-card .btn-netflix{cursor:pointer}
 
 /* Profiles */
 #profileScreen{background:var(--black)}
@@ -114,7 +130,7 @@ img{max-width:100%;display:block}
 .dropdown-menu>a:hover{background:rgba(255,255,255,.1);color:#fff}
 
 /* Hero */
-.hero{position:relative;height:85vh;min-height:480px;background:linear-gradient(to right,rgba(0,0,0,.85) 0%,rgba(0,0,0,.4) 45%,transparent 70%),linear-gradient(to top,var(--black) 0%,transparent 30%),var(--hero-image, url("posters/stranger-things.svg")) center/cover no-repeat;display:flex;align-items:flex-end;padding:0 4% 8%}
+.hero{position:relative;height:85vh;min-height:480px;background:linear-gradient(to right,rgba(0,0,0,.85) 0%,rgba(0,0,0,.4) 45%,transparent 70%),linear-gradient(to top,var(--black) 0%,transparent 30%),url("https://i.ytimg.com/vi/b9EkMc79ZSU/maxresdefault.jpg") center/cover no-repeat;display:flex;align-items:flex-end;padding:0 4% 8%}
 .hero-content{max-width:540px;z-index:2}
 .hero-title{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;margin-bottom:.75rem;text-shadow:2px 2px 8px rgba(0,0,0,.8)}
 .hero-meta{display:flex;flex-wrap:wrap;gap:.55rem;align-items:center;margin-bottom:1rem;font-size:.9rem}
@@ -138,9 +154,9 @@ img{max-width:100%;display:block}
 .row-container{position:relative}
 .row-posters{display:flex;gap:.55rem;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:none;padding:.4rem 0 1rem}
 .row-posters::-webkit-scrollbar{display:none}
-.poster{flex:0 0 auto;width:190px;border-radius:4px;overflow:hidden;cursor:pointer;position:relative;background:#222;transition:transform .25s,box-shadow .25s}
+.poster{flex:0 0 auto;width:210px;border-radius:4px;overflow:hidden;cursor:pointer;position:relative;background:#222;transition:transform .25s,box-shadow .25s}
 .poster:hover{transform:scale(1.07);z-index:10;box-shadow:0 8px 25px rgba(0,0,0,.65)}
-.poster img{width:100%;height:285px;object-fit:cover;object-position:center;background:#222}
+.poster img{width:100%;height:118px;object-fit:cover;object-position:center;background:#222}
 .poster-title-bar{padding:.55rem .65rem .7rem;background:linear-gradient(to top,#141414,#1a1a1a)}
 .poster-title-bar h3{font-size:.88rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:.2rem}
 .poster-meta{font-size:.72rem;color:var(--lg);display:flex;gap:.35rem;align-items:center;flex-wrap:wrap}
@@ -148,7 +164,7 @@ img{max-width:100%;display:block}
 .poster-actions button{width:28px;height:28px;border-radius:50%;background:rgba(42,42,42,.9);border:1px solid rgba(255,255,255,.35);color:#fff;font-size:.7rem;display:flex;align-items:center;justify-content:center}
 .poster-actions button:hover{background:#fff;color:#000;border-color:#fff}
 
-.top10 .poster{width:190px}
+.top10 .poster{width:200px}
 .top10 .poster::before{content:attr(data-rank);position:absolute;left:2px;bottom:70px;font-size:4.5rem;font-weight:900;color:#000;-webkit-text-stroke:2.5px #666;z-index:2;line-height:1;pointer-events:none;font-family:Arial Black,sans-serif}
 
 .row-arrow{position:absolute;top:0;bottom:1rem;width:44px;background:rgba(20,20,20,.55);color:#fff;font-size:1.4rem;z-index:20;display:flex;align-items:center;justify-content:center;opacity:0;transition:.25s}
@@ -195,100 +211,23 @@ img{max-width:100%;display:block}
 .footer-links a:hover{text-decoration:underline;color:var(--lg)}
 .footer-copy{margin-top:1rem;font-size:.8rem;line-height:1.8}
 
-@media(max-width:1100px){
-  .nav-links{gap:.8rem}
-  .nav-links a{font-size:.8rem}
-  .poster{width:175px}
-  .poster img{height:262px}
-  .hero{height:72vh}
-}
-
-@media(max-width:800px){
-  .navbar{height:60px;padding:0 1.1rem}
+@media(max-width:900px){
   .nav-links{display:none}
-  .nav-left{min-width:0}
-  .brand-logo-sm .logo-netflix{font-size:1.2rem}
-  .brand-logo-sm .logo-clone{font-size:.58rem;letter-spacing:1.5px}
-  .nav-right{gap:.65rem}
-  .search-box{width:38px;height:34px;padding:.35rem .55rem}
-  .search-box:focus-within{width:min(48vw,220px)}
-  .search-box input{font-size:.8rem}
-  .nav-icon{font-size:1rem}
-  .hero{height:66svh;min-height:430px;padding:0 1.1rem 4.5rem;background-position:center}
-  .hero-content{max-width:620px}
-  .hero-title{font-size:clamp(2rem,8vw,3.2rem)}
-  .hero-description{font-size:.95rem;max-width:560px}
-  .content{margin-top:-45px}
-  .row{padding:0 1.1rem;margin-bottom:1.6rem}
-  .row-title{font-size:1.1rem}
-  .poster{width:160px}
-  .poster img{height:240px}
-  .row-arrow{display:none}
-  .modal{padding:1rem .75rem}
-  .modal-body{grid-template-columns:1fr;padding:0 1.1rem 1.2rem;gap:1rem}
-  .modal-banner{height:250px}
+  .hero{height:70vh}
+  .hero-title{font-size:2.1rem}
+  .poster{width:170px}
+  .poster img{height:96px}
+  .modal-body{grid-template-columns:1fr}
+  .modal-banner{height:240px}
+  .login-card{padding:2.2rem 1.75rem}
 }
-
 @media(max-width:600px){
-  body{font-size:14px}
-  .login-card{padding:2rem 1.2rem;border-radius:10px}
-  .login-nav{padding:1.1rem 1.1rem}
-  .brand-logo .logo-netflix{font-size:1.35rem}
-  .brand-logo .logo-clone{font-size:.68rem;letter-spacing:2px}
-  .demo-badge{font-size:.65rem}
-  .demo-notice{font-size:.82rem}
-  .btn-netflix{padding:.9rem}
-  .hero{height:62svh;min-height:420px;padding:0 1rem 4rem;background-position:58% center}
-  .hero-content{max-width:100%}
-  .hero-title{font-size:2rem;max-width:95%}
-  .hero-meta{gap:.4rem;font-size:.78rem}
-  .hero-description{font-size:.85rem;line-height:1.45;-webkit-line-clamp:3;margin-bottom:1rem}
-  .hero-buttons{gap:.5rem}
-  .btn{padding:.55rem .9rem;font-size:.85rem}
-  .content{margin-top:-35px;padding-bottom:1rem}
-  .row{padding:0 1rem;margin-bottom:1.35rem}
-  .row-posters{gap:.5rem;padding:.25rem 0 .75rem}
-  .poster,.top10 .poster{width:135px}
-  .poster img{height:203px}
-  .poster-title-bar{padding:.45rem .5rem .55rem}
-  .poster-title-bar h3{font-size:.78rem}
-  .poster-meta{font-size:.65rem}
-  .poster-actions{display:none}
-  .profiles-wrap{padding:4.5rem .75rem 1.5rem}
-  .profiles-title{font-size:2rem;margin-bottom:1.8rem}
-  .profiles-grid{gap:1.25rem .9rem;width:100%}
-  .profile-card{width:82px}
-  .profile-avatar{width:76px;height:76px}
-  .profile-name{font-size:.85rem;max-width:82px}
-  .manage-profiles-btn{margin-top:2rem;padding:.55rem 1rem}
-  .profile-modal-card{padding:1.4rem 1.1rem}
-  .add-profile-row{gap:.75rem}
-  .add-avatar{width:64px;height:64px}
-  .profile-modal-actions{flex-direction:column-reverse;gap:.6rem}
-  .profile-modal-actions .btn-netflix,.btn-cancel{width:100%}
-  .modal{padding:.5rem}
-  .modal-content{border-radius:8px}
-  .modal-banner{height:210px}
-  .modal-banner-info{left:1rem;right:1rem;bottom:1rem}
-  .modal-banner-info h2{font-size:1.35rem}
-  .modal-buttons .btn{padding:.5rem .8rem}
-  .modal-body{font-size:.85rem}
-  .trailer-modal{padding:.65rem}
-  .trailer-close{top:-34px;font-size:1.7rem}
-  .trailer-info h3{font-size:1.05rem}
-  .trailer-info p{font-size:.8rem}
-  .footer{padding:2rem 1rem 1.5rem}
-  .footer-links{grid-template-columns:repeat(2,1fr);gap:.65rem 1rem}
-}
-
-@media(max-width:380px){
-  .brand-logo .logo-netflix{font-size:1.2rem}
-  .brand-logo .logo-clone{font-size:.58rem}
-  .nav-right{gap:.45rem}
-  .search-box:focus-within{width:42vw}
-  .hero{min-height:390px}
-  .poster,.top10 .poster{width:122px}
-  .poster img{height:183px}
-  .profile-card{width:76px}
-  .profile-avatar{width:70px;height:70px}
+  .navbar{height:56px}
+  .brand-logo-sm{font-size:1.1rem}
+  .hero{height:58vh;min-height:380px}
+  .poster{width:140px}
+  .poster img{height:80px}
+  .row-arrow{width:32px;font-size:1.1rem}
+  .profile-avatar{width:90px;height:90px}
+  .profile-card{width:100px}
 }
